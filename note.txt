@@ -1,0 +1,88 @@
+===BASIC OF NEST===
+
+1.Project setup
+
+npm init 
+npm install @nestjs/common@7.6.17 @nestjs/core@7.6.17 @nestjs/platform-express@7.6.17 reflect-metadata@0.1.13 typescript@4.3.2
+
+- Giải thích một số Dependencies:
+"@nestjs/common": chứa phần lớn các func, class cần từ Nest
+"@nestjs/platform-express": cho Nest sử dụng Express để xử lí với HTTP
+"reflect-metadata": giúp decorator hoạt động
+"typescript": Nest app với bằng Ts
+
+2.Typescript conf
+
+- Tạo tsconfig.json -> crtl + c, ctrl + v
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es2017",
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true
+    }
+}
+
+3.Creating a Controller
+
+- Flow chung khi làm việc phía server:
+    Req -> Validate data -> auth -> route req to particular func -> run bussiness logic -> access db
+- Tương tự vậy, trong NestJS, ta cũng sử dụng các tool để flow theo luồng trên:
+    Req -> Pipe (Valid) -> Guard (Auth) -> Controller (Route) -> Service (bussiness) -> Repo (db)
+- Một cách khác:
+    Controller -> Xử lí incoming req
+    |
+    Service      -> Xử lí việc truy cập data và bussiness logic
+    |
+    Modules      -> Groups together code
+    |
+    Pipes        -> Validate req data 
+    |
+    Filters      -> Xử lí errors xảy ra khi xử lí req
+    |
+    Guards       -> Auth
+    |
+    Interceptors -> Add extra logic
+    |
+    Repositories -> xử lí với db
+
+- Ví dụ, tạo một controller basic:
+import {Controller, Module, Get} from "@nestjs/common";
+import { NestFactory } from "@nestjs/core";
+
+@Controller()
+class AppController {
+    @Get()
+    getRootRouter() {
+        return "Hello World";
+    }
+}
+
+@Module({
+    controllers: [AppController],
+})
+class AppModule {}
+
+async function bootstrap(){
+    const app = await NestFactory.create(AppModule);
+    await app.listen(3000);
+}
+bootstrap();
+
+4.File name conventions (quy ước đặt tên)
+
+- Mỗi class một File
+- Tên class nên có nghĩa
+
+5.Routing decorator:
+- decorator là mấy cái có @, routing decorator dùng để biết method và route của nó, ví dụ:
+    @Get("/okokok")
+    //Method xử lí cho route
+    getOk(){ return "okokok"; }
+
+===GENERATING PROJECTS WITH THE NEST CLI=== 
+
+1.App setup:
+$ npm i -g @nestjs/cli
+$ nest new project-name
+
