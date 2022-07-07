@@ -2,8 +2,8 @@
 
 1.Project setup
 
-npm init 
-npm install @nestjs/common@7.6.17 @nestjs/core@7.6.17 @nestjs/platform-express@7.6.17 reflect-metadata@0.1.13 typescript@4.3.2
+$ npm init 
+$ npm install @nestjs/common@7.6.17 @nestjs/core@7.6.17 @nestjs/platform-express@7.6.17 reflect-metadata@0.1.13 typescript@4.3.2
 
 - Giải thích một số Dependencies:
 "@nestjs/common": chứa phần lớn các func, class cần từ Nest
@@ -80,9 +80,30 @@ bootstrap();
     //Method xử lí cho route
     getOk(){ return "okokok"; }
 
+
 ===GENERATING PROJECTS WITH THE NEST CLI=== 
 
-1.App setup:
+1.App setup + Using Nest CLI to generate files:
 $ npm i -g @nestjs/cli
 $ nest new project-name
 
+- Tạm thời comment lại cái eslintrc cho đỡ phiền :D 
+- Tạo module:
+$ nest generate module "tên module"
+Trong project có tên modules là "messages"
+- Tương tự, tạo controller:
+$ nest generate controller messages/messages --flat
+Trong đó, messages/messages là tạo controller messages trong folder messages
+Sử dụng thêm cờ --flat để không cho tạo thêm folder controllers
+
+2.Adding routing logic
+- Các route bao gồm:
+    [GET]   /messages       => listMessages()
+    [POST]  /messages       => createMessage()
+    [GET]   /messages/:id   => getMessage()
+=> Gom hết /messages lại vào decorator @Controller('/messages')
+
+
+###VALIDATE REQUEST DATA WITH PIPES
+
+1.Accessing Req Data with Decorator
