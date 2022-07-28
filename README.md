@@ -1,5 +1,7 @@
 ## Description
-
+There are mini apps in each of branch:
+- organizing-code-with-modules/computer
+- project-practice/used-car-api
 ## Installation
 
 ```bash
