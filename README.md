@@ -34,17 +34,33 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-## API Documentation
-
-# List all messages
+# API Documentation
+###
+#### List all messages
 GET localhost:3000/messages
-# Create a new message
+#### Create a new message
 POST localhost:3000/messages
 content-type: application/json
 {
     "content": "okokok"
 }
-# Get a particular message
+#### Get a particular message
 GET localhost:3000/message/123456
 
+
+### USED CAR API
+#### Create user
+POST /auth/signup
+content-type: application/json
+{
+    "email": "okok@ok",
+    "password": "password"
+}
+#### Sign in user
+POST /auth/signin
+content-type: application/json
+{
+    "email": "okok@ok",
+    "password": "password"
+}
 ## Stay in touch
