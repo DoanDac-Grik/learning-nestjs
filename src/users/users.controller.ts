@@ -20,14 +20,28 @@ export class UsersController {
         return session.color;
     }
 
+    @Get('/whoami')
+    whoAmI(@Session() session: any){
+        return this.usersService.findOne(session.userId);
+    }
+
     @Post('/signup')
-    createUser(@Body() body: CreateUserDto) {
-        return this.authService.signUp(body.email, body.password);
+    async createUser(@Body() body: CreateUserDto, @Session() session: any) {
+        const user = await this.authService.signUp(body.email, body.password);
+        session.userId = user.id;
+        return user;
+    }
+
+    @Post('/signout')
+    signOut(@Session() session: any) {
+        session.userId = null;
     }
 
     @Post('/signin')
-    signIn(@Body() body: CreateUserDto) {
-        return this.authService.signIn(body.email, body.password);
+    async signIn(@Body() body: CreateUserDto, @Session() session: any) {
+        const user = await this.authService.signIn(body.email, body.password);
+        session.userId = user.id;
+        return user;
     }
 
     @Get('/:id')
